@@ -1,33 +1,38 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link rel="stylesheet" type="text/css" href="stylesheet.css">
+		<script src='http://code.jquery.com/jquery-2.1.1.min.js'></script>
+		<script src='mustache.js'></script>
+		<script>
 
-	<script src='http://code.jquery.com/jquery-2.1.1.min.js'></script>
-	<script src='mustache.js'></script>
-	<script>
+		$(document).ready(function() {
+			$.get('http://www.bbc.co.uk/radio1/programmes/schedules/england/upcoming.json', function(schedule) {
+				
+				var programmeHash = (schedule["schedule"]["now"]["broadcast"]["programme"]["programme"]);
+			
+					var programmeData = Mustache.render($('#bbc').html(), programmeHash);
 
-	$(document).ready(function() {
-		$.get('http://www.bbc.co.uk/radio1/programmes/schedules/england/upcoming.json', function(schedule) {
-			var programmeHash = (schedule["schedule"]["now"]["broadcast"]["programme"]["programme"]);
-			var hash = Mustache.render($('#bbc').html(), programmeHash);
-						$("body").html(hash);
+						$(".container").append(programmeData);
+		
+			});
 		});
-	});
-	</script>
 
-	<template id="bbc">
-	<section class="container">
-		<h3> {{ title }}</h3>
+		</script>
 
-	</section>
-	</template>
+		<template id="bbc">
+			<h2>{{ #ownership }}{{ #service }}{{ title }}{{ /service }}{{ /ownership }} </h2>
+			<h3>Playing now: {{ title }}</h3>
+		
+		</template>
 
 	</head>
 
 	<body>
 
-
-	
+		<section class="container">
+		<h3>can you see me??</h3>
+		</section>
 
 
 	</body>
