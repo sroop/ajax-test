@@ -18,22 +18,41 @@
 				});
 		}
 
-		function currentTrack(){
+		function currentTrack(callback){
 				var lastfm_api = 'http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=bbcradio1&api_key=b5c8f8bb84deb8de7d68665b1670971a&format=json';
+				
 				$.get(lastfm_api, function(tracks){
 					var firstTrack = tracks["recenttracks"]["track"][0]
 					firstTrack["artist"]["text"] = firstTrack["artist"]["#text"]
 					var tracklist = Mustache.render($('#lastfm').html(), firstTrack);
 						$(".container").append(tracklist);
+						if(callback) {
+							callback(firstTrack["artist"]["text"]);
+						}
 				});
-			}
+		}
+
+		function spotify(artist) {
+
+			$.get('https://ws.spotify.com/search/1/artist.json?q=' + artist, function(spotifyArtist) {
+				var artistsHref = spotifyArtist["artists"][0]["href"];
+				var uri = { "href": artistURI(artistsHref) }
+				var spotifyArtists = Mustache.render($('#spotify').html(), uri);
+					$(".container").append(spotifyArtists);
+			});
+		} 
+
+		function artistURI(href) {
+			return href.slice(15, href.length);
+		}
+
 		</script>
 
 
 		<script>
 		$(document).ready(function() {
 			currentProgramme();
-			currentTrack();
+			currentTrack(spotify);
 		});
 		</script>
 
@@ -46,6 +65,10 @@
 		<template id="lastfm">
 			{{#artist}}<h3>{{text}}</h3>{{/artist}}
 			<h3>{{ name }}</h3>
+		</template>
+
+		<template id="spotify">
+			<a href="http://open.spotify.com/artist/{{ href }}">Listen now!</a>	
 		</template>
 
 	</head>
