@@ -21,7 +21,9 @@
 		function currentTrack(){
 				var lastfm_api = 'http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=bbcradio1&api_key=b5c8f8bb84deb8de7d68665b1670971a&format=json';
 				$.get(lastfm_api, function(tracks){
-					var tracklist = Mustache.render($('#lastfm').html(), tracks["recenttracks"]["track"][0]);
+					var firstTrack = tracks["recenttracks"]["track"][0]
+					firstTrack["artist"]["text"] = firstTrack["artist"]["#text"]
+					var tracklist = Mustache.render($('#lastfm').html(), firstTrack);
 						$(".container").append(tracklist);
 				});
 			}
@@ -42,6 +44,7 @@
 		</template>
 
 		<template id="lastfm">
+			{{#artist}}<h3>{{text}}</h3>{{/artist}}
 			<h3>{{ name }}</h3>
 		</template>
 
