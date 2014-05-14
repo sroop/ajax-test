@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+	<script src='http://code.jquery.com/jquery-2.1.1.min.js'></script>
+	<script src='mustache.js'></script>
+	<script>
+
+	$(document).ready(function() {
+		$.get('http://www.bbc.co.uk/radio1/programmes/schedules/england/upcoming.json', function(schedule) {
+			var programmeHash = (schedule["schedule"]["now"]["broadcast"]["programme"]["programme"]);
+			var hash = Mustache.render($('#bbc').html(), programmeHash);
+						$("body").html(hash);
+		});
+	});
+	</script>
+
+	<template id="bbc">
+	<section class="container">
+		<h3> {{ title }}</h3>
+
+	</section>
+	</template>
+
+	</head>
+
+	<body>
+
+
+	
+
+
+	</body>
+</html>
