@@ -1,4 +1,30 @@
 .container h3 {
 	text-align: center;
-	font-size: 5vw;
+	font-size: 20px;
+}
+
+.container {
+	width: 500px;
+	margin: auto;
+	height: 500px;
+	position: absolute;
+  	top: 0;
+  	left: 0;
+  	bottom: 0;
+  	right: 0;
+	background-color: black;
+	color: white;
+	border-radius: 100%;
+	text-align: center;
+}
+
+#radio1 {
+	font-family: "Arvo";
+	font-size: 30px;
+	margin-top: 150px;
+}
+
+#programme-title {
+	font-family: "Arvo";
+	font-size: 40px;
 }

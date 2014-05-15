@@ -1,7 +1,32 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link rel="stylesheet" type="text/css" href="reset.css">
 		<link rel="stylesheet" type="text/css" href="stylesheet.css">
+		<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Arvo">
+
+	</head>
+
+	<body>
+		<template id="bbc">
+			<h5 id="radio1">{{ #ownership }}{{ #service }}{{ title }}{{ /service }}{{ /ownership }} </h5>
+			<h5 id="programme-title">{{ title }}</h5>
+		</template>
+
+		<template id="lastfm">
+			{{#artist}}<h3>{{text}}</h3>{{/artist}}
+			<h3>{{ name }}</h3>
+		</template>
+
+		<template id="spotify">
+			<a href="http://open.spotify.com/artist/{{ href }}">Like this artist? Listen to more..</a>	
+		</template>
+
+		<section class="container">
+			<div class="circle">
+			</div>
+		</section>
+
 		<script src='http://code.jquery.com/jquery-2.1.1.min.js'></script>
 		<script src='mustache.js'></script>
 
@@ -46,39 +71,25 @@
 			return href.slice(15, href.length);
 		}
 
+		function pageUpdate() {
+			currentProgramme();
+			currentTrack(spotify);
+		}
+		function ReloadPage() {
+			location.reload();
+		};
+
 		</script>
+
+
 
 
 		<script>
 		$(document).ready(function() {
-			currentProgramme();
-			currentTrack(spotify);
+			pageUpdate();
+			  setTimeout("ReloadPage()", 120000);
 		});
 		</script>
-
-
-		<template id="bbc">
-			<h2>{{ #ownership }}{{ #service }}{{ title }}{{ /service }}{{ /ownership }} </h2>
-			<h3>Playing now: {{ title }}</h3>
-		</template>
-
-		<template id="lastfm">
-			{{#artist}}<h3>{{text}}</h3>{{/artist}}
-			<h3>{{ name }}</h3>
-		</template>
-
-		<template id="spotify">
-			<a href="http://open.spotify.com/artist/{{ href }}">Listen now!</a>	
-		</template>
-
-	</head>
-
-	<body>
-
-		<section class="container">
-		<h3>can you see me??</h3>
-		</section>
-
 
 	</body>
 </html>
